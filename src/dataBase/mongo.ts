@@ -7,6 +7,11 @@ const TaskSchema = new mongoose.Schema({
   completed: Boolean
 });
 
-const TaskCollection = mongoose.model('Task', TaskSchema);
-
-export {TaskCollection};
+const UsersSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+});
+const TaskCollection = mongoose.model('tasks', TaskSchema);
+const UserCollection = mongoose.model('users', UsersSchema)
+export {TaskCollection, UserCollection};
