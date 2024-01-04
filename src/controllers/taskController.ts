@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TaskCollection } from "../dataBase/mongo";
+import { TaskCollection } from "../models/mongo";
 
 export class TasksController{
    public createTask = async (req: Request, res: Response) => {
