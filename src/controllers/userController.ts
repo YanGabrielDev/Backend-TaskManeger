@@ -41,4 +41,21 @@ export class UserController {
       throw new ApiError('Erro do servidor!')
     }
   }
+
+  public getUser = async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.query
+      const user = await UserService.getUser(String(email), String(password))
+
+      if (!user) {
+        throw new BadRequestError('Usuario não encontrado!')
+      }
+      res.json(user)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.status(500).send({ message: error.message })
+        return
+      }
+    }
+  }
 }
