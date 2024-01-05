@@ -32,11 +32,11 @@ export class UserController {
         throw new BadRequestError('Usuario não encontrado!')
       }
 
-      const token = jwt.sign(req.body, randomId(), {
+      const accessToken = jwt.sign(req.body, randomId(), {
         expiresIn: '1 days',
       })
 
-      res.status(200).send({ access_token: token })
+      res.status(200).send({ access_token: accessToken })
     } catch (error) {
       throw new ApiError('Erro do servidor!')
     }
