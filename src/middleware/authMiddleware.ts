@@ -6,12 +6,15 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.headers['Authorization']
-  const tokenDecode = jwt.decode(String(token))
+  const token = req.headers['authorization']
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { iat, exp }: any = jwt.decode(String(token))
 
-  console.log(tokenDecode)
   if (!token) {
     return res.status(401).send({ error: 'unauthorized token' })
+  }
+  if (iat >= exp) {
+    return res.status(401).send({ error: 'Token expirado!' })
   }
 
   next()
