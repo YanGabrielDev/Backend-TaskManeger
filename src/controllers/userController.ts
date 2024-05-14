@@ -10,7 +10,8 @@ export class UserController {
       const { name, email, password, confirmPassword } = await req.body
 
       await UserService.validateUserCreation(email, password, confirmPassword)
-      const user = UserService.createUser(name, email, password)
+      const user = await UserService.createUser(name, email, password)
+
       res.json(user)
     } catch (error) {
       if (error instanceof BadRequestError) {
