@@ -1,6 +1,7 @@
 import { BadRequestError } from '../erros'
 import { UserCollection } from '../models/mongo'
 import bcrypt from 'bcrypt'
+
 export class UserService {
   static validateUserEmail(email: string) {
     const validateEmailRegex = /^\S+@\S+\.\S+$/
@@ -36,12 +37,14 @@ export class UserService {
   }
 
   static async getUser(email: string, password: string) {
-    // const saltRounds = 10
-    const user = UserCollection.findOne({ email, password })
-    // if(user){
-    //   const isMatch = await bcrypt.compare(password, user);
+    const user = await UserCollection.findOne({ email })
 
-    // }
-    return user
+    if (user) {
+      const passwordCompare = user.password || ''
+
+      const isMatch = await bcrypt.compare(password, passwordCompare)
+      if (isMatch) return user
+    }
+    return null
   }
 }

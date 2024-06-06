@@ -28,7 +28,8 @@ export class UserController {
   public signIn = async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body
-      const user = UserService.getUser(email, password)
+      const user = await UserService.getUser(email, password)
+
       if (!user) {
         throw new BadRequestError('Usuario não encontrado!')
       }
@@ -39,7 +40,13 @@ export class UserController {
 
       res.status(200).send({ access_token: accessToken })
     } catch (error) {
-      throw new ApiError('Erro do servidor!')
+      console.error(error)
+
+      if (error instanceof BadRequestError) {
+        res.status(400).send({ error: error.message })
+      } else {
+        res.status(500).send({ error: 'Erro do servidor!' })
+      }
     }
   }
 
