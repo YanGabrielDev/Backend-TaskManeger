@@ -1,20 +1,26 @@
 import { Request, Response, NextFunction } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 
 export const authMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
+  if (req.path === '/user/login' || req.path === '/user') {
+    next()
+    return
+  }
   const accessToken = req.headers['authorization']
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { iat, exp }: any = jwt.decode(String(accessToken))
+
+  const { exp, iat } = jwt.decode(String(accessToken)) as JwtPayload
 
   if (!accessToken) {
     return res.status(401).send({ error: 'unauthorized token' })
   }
-  if (iat >= exp) {
-    return res.status(401).send({ error: 'Token expirado!' })
+  if (iat && exp) {
+    if (iat >= exp) {
+      return res.status(401).send({ error: 'Token expirado!' })
+    }
   }
 
   next()
