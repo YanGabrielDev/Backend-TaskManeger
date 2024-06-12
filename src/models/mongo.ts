@@ -1,5 +1,13 @@
 import mongoose from 'mongoose'
-mongoose.connect('mongodb://localhost:27017/tasks')
+import dotenv from 'dotenv'
+dotenv.config()
+const mongoCredentials = process.env.MONGO_CREDENTIALS;
+
+if (!mongoCredentials) {
+  throw new Error('As credenciais do MongoDB não foram fornecidas.');
+}
+
+mongoose.connect(mongoCredentials)
 
 const TaskSchema = new mongoose.Schema({
   title: String,
