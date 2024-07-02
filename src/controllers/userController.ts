@@ -35,9 +35,12 @@ export class UserController {
       }
 
       const accessToken = jwt.sign(req.body, randomId(), {
-        expiresIn: '1 days',
+        // expiresIn: '1 days',
+        expiresIn: '10s'
       })
-      res.cookie('jwt', accessToken, { httpOnly: true });
+      res.cookie('access_token', accessToken, {
+        httpOnly: true
+      });
       res.status(200).send({ message: 'Login realizado com sucesso!' })
 
     } catch (error) {
