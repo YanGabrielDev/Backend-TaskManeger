@@ -12,7 +12,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://study-module-one.vercel.app/login'
+  'https://study-module-one.vercel.app'
 ];
 
 app.use(cors({
