@@ -38,7 +38,9 @@ export class UserController {
         expiresIn: '1 days',
       })
       res.cookie('access_token', accessToken, {
-        httpOnly: true
+        httpOnly: true,
+        secure: true,
+        domain: '.vercel.app'
       });
       res.status(200).send({ message: 'Login realizado com sucesso!' })
 
