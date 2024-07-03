@@ -9,12 +9,10 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser());
 
-// Configuração do CORS para permitir múltiplas origens
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'https://study-module-one.vercel.app/login'
-  // Adicione outras origens permitidas aqui, se necessário
 ];
 
 app.use(cors({
