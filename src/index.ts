@@ -9,10 +9,18 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser());
 
+// Configuração do CORS para permitir múltiplas origens
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001'
+  // Adicione outras origens permitidas aqui, se necessário
+];
+
 app.use(cors({
-  origin: 'http://localhost:3000', // ou qualquer outra porta que seu front-end esteja rodando
-  credentials: true
+  origin: allowedOrigins,
+  credentials: true,
 }));
+
 app.use(authMiddleware)
 app.use('/tasks', tasksRoute)
 app.use('/user', userRoute)

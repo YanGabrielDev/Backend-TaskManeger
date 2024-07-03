@@ -35,8 +35,7 @@ export class UserController {
       }
 
       const accessToken = jwt.sign(req.body, randomId(), {
-        // expiresIn: '1 days',
-        expiresIn: '10s'
+        expiresIn: '1 days',
       })
       res.cookie('access_token', accessToken, {
         httpOnly: true
