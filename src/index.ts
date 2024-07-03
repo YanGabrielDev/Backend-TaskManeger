@@ -13,7 +13,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://study-module-one.vercel.app/'
+  'https://study-module-one.vercel.app/login'
   // Adicione outras origens permitidas aqui, se necessário
 ];
 
