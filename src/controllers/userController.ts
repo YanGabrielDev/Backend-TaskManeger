@@ -39,10 +39,7 @@ export class UserController {
       })
       res.cookie('access_token', accessToken, {
         httpOnly: true,
-        sameSite: 'strict',
-        secure: true, // Definir para true em produção (requer HTTPS)
-        maxAge: 3600000, // Tempo de vida do cookie (1 hora)
-        domain: '.vercel.app' // Substituir com seu domínio correto
+        domain: '.vercel.app'
       });
       res.status(200).send({ message: 'Login realizado com sucesso!' })
 
