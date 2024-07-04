@@ -37,7 +37,10 @@ export class UserController {
       const accessToken = jwt.sign(req.body, randomId(), {
         expiresIn: '1 days',
       })
-      res.cookie('access_token', accessToken, { domain: 'study-module-one.vercel.app', secure: true, sameSite: 'none' });
+      res.cookie('access_token', accessToken, {
+        httpOnly: true,
+        domain: 'study-module-one.vercel.app'
+      });
       res.status(200).send({ message: 'Login realizado com sucesso!' })
 
     } catch (error) {
