@@ -39,8 +39,11 @@ export class UserController {
       })
       res.cookie('access_token', accessToken, {
         httpOnly: true,
+        sameSite: 'none',
+        secure: true,
         domain: 'vercel.app',
-        path: "/login"
+        path: "/login",
+
       });
       res.status(200).send({ message: 'Login realizado com sucesso!' })
 
