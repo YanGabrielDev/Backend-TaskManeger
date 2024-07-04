@@ -19,6 +19,7 @@ const UsersSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
+  modules: Array
 })
 const TaskCollection = mongoose.model('tasks', TaskSchema)
 const UserCollection = mongoose.model('users', UsersSchema)
