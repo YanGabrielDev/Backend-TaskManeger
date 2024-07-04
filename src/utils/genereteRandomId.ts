@@ -1,4 +1,4 @@
-export const randomId = (length = 8) => {
+export const generateRandomId = (length = 8) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let str = ''
   for (let i = 0; i < length; i++) {
