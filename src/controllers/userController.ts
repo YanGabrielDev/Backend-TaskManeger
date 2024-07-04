@@ -41,9 +41,6 @@ export class UserController {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
-        domain: '.vercel.app',
-        path: "/login",
-
       });
       res.status(200).send({ message: 'Login realizado com sucesso!' })
 
