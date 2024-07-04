@@ -31,7 +31,8 @@ export class UserService {
   static async createUser(name: string, email: string, password: string) {
     const saltRounds = 10
     const hash = await bcrypt.hash(password, saltRounds)
-    const user = new UserCollection({ email, name, password: hash })
+    const modules = ['Study Timer', 'Study Manager']
+    const user = new UserCollection({ email, name, password: hash, modules })
     await user.save()
     return user
   }
