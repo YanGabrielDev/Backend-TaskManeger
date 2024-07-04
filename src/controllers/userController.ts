@@ -41,7 +41,7 @@ export class UserController {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
-        domain: 'vercel.app',
+        domain: '.vercel.app',
         path: "/login",
 
       });
