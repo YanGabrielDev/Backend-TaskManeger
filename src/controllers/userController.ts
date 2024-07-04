@@ -38,7 +38,6 @@ export class UserController {
         expiresIn: '1 days',
       })
       res.cookie('access_token', accessToken, {
-        httpOnly: true,
         sameSite: 'none',
         secure: true,
       });
