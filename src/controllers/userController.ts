@@ -4,8 +4,17 @@ import { UserService } from '../services/userService';
 import { BadRequestError, ApiError } from '../erros';
 import { generateRandomId } from '../utils/genereteRandomId';
 
+/**
+ * Controller responsável por gerenciar as operações relacionadas ao usuário.
+ */
 export class UserController {
-  public createUser = async (req: Request, res: Response) => {
+  /**
+   * Cria um novo usuário.
+   * @param {Request} req - Objeto de requisição do Express.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @returns {Promise<void>}
+   */
+  public createUser = async (req: Request, res: Response): Promise<void> => {
     try {
       const { name, email, password, confirmPassword } = req.body;
 
@@ -18,7 +27,13 @@ export class UserController {
     }
   };
 
-  public signIn = async (req: Request, res: Response) => {
+  /**
+   * Autentica um usuário existente e emite um token de acesso.
+   * @param {Request} req - Objeto de requisição do Express contendo email e senha.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @returns {Promise<void>}
+   */
+  public signIn = async (req: Request, res: Response): Promise<void> => {
     try {
       const { email, password } = req.body;
       const user = await UserService.getUser(email, password);
@@ -42,7 +57,32 @@ export class UserController {
     }
   };
 
-  public getUser = async (req: Request, res: Response) => {
+  /**
+   * Invalida o token de acesso do usuário (logout).
+   * @param {Request} req - Objeto de requisição do Express.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @returns {Promise<void>}
+   */
+  public logoutUser = async (req: Request, res: Response): Promise<void> => {
+    try {
+      res.cookie('access_token', null, {
+        sameSite: 'none',
+        secure: true,
+      });
+
+      res.status(200).send({ message: 'Token invalidado com sucesso!' });
+    } catch (error) {
+      this.handleError(res, error);
+    }
+  };
+
+  /**
+   * Retorna as informações de um usuário com base no email e senha.
+   * @param {Request} req - Objeto de requisição do Express contendo email e senha.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @returns {Promise<void>}
+   */
+  public getUser = async (req: Request, res: Response): Promise<void> => {
     try {
       const { email, password } = req.query;
       const user = await UserService.getUser(String(email), String(password));
@@ -57,7 +97,13 @@ export class UserController {
     }
   };
 
-  private handleError(res: Response, error: any) {
+  /**
+   * Trata erros específicos da aplicação e envia a resposta apropriada.
+   * @param {Response} res - Objeto de resposta do Express.
+   * @param {any} error - Objeto de erro capturado.
+   * @private
+   */
+  private handleError(res: Response, error: any): void {
     if (error instanceof BadRequestError) {
       res.status(400).send({ error: error.message });
     } else if (error instanceof ApiError) {
